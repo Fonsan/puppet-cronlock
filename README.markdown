@@ -1,3 +1,0 @@
-# cronlock #
-
-This is the cronlock module. It provides...
