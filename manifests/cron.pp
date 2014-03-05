@@ -13,14 +13,20 @@ define cronlock::cron(
   $special      = undef,
   $target       = undef,
   $user         = undef,
-  $weekday      = undef
+  $weekday      = undef,
+  $cwd          = undef
 ){
 
   include cronlock
+  if $cwd != undef {
+    $real_command = "cd ${cwd} && ${cronlock::install_path}/cronlock ${command}"
+  }else{
+    $real_command = "${cronlock::install_path}/cronlock ${command}"
+  }
 
   cron{$name:
     ensure        =>  $ensure,
-    command       =>  "${cronlock::install_path}/cronlock ${command}",
+    command       =>  $real_command,
     environment   =>  $environment,
     hour          =>  $hour,
     minute        =>  $minute,
