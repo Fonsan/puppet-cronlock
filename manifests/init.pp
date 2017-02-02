@@ -17,7 +17,7 @@ class cronlock (
   $redis_host     = $::cronlock::params::redis_host,
   $redis_port     = $::cronlock::params::redis_port,
   $prefix         = $::cronlock::params::prefix,
-  $key            = $::cronlock::params::global_key,
+  $key            = $::cronlock::params::key,
 
   $verbose        = $::cronlock::params::verbose,
   $ntpdate        = $::cronlock::params::ntpdate,
@@ -29,10 +29,6 @@ class cronlock (
   $group          = $::cronlock::params::group
 ) inherits cronlock::params
 {
-
-  include install
-  include config
-
-  Class['install'] ->
-  Class['config']
+  class {'cronlock::install': } -> 
+  class {'cronlock::config': }
 }
